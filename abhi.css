@@ -1,0 +1,80 @@
+
+    body {background-image: url("maxresdefault.jpg");
+background-size: cover;}
+		.countdowncontent {
+		position: absolute;
+		background-color: #ddd;
+		padding: 20px,20px;
+	  box-shadow: 10px 10px 5px #888888;
+	  text-align: center;
+	  top: 50%;
+	  left: 20%;
+	  transform: translateX(50%),translateY(50%);
+	  border-radius: 25px;
+	  
+	  }
+	  .size {
+	  font-size: 40px;
+	  font-family: algerian;}
+	  th { text-align: center;}
+	  th,td { padding: 15px;}
+	  td { 
+	  background-color: black;
+	  color: white;}
+	  #finish {color:#FFCCCC;
+	  font-family: algerian;
+	  font-size: 40px;
+	  position: absolute;
+	  top: 150px;
+	  left: 300px;
+	  }
+	  .buttons{ position: absolute;
+	   top: 82%;
+	  left: 30%;
+	  padding: 50px;
+	  display: inline block;
+	  text-color: white;
+	  }
+	  #button1 {width: 100px;
+	  height: 50px;
+	  background-color: red;}
+	  #button2 {width: 100px;
+	  height: 50px;
+	  background-color: red;}
+	  #button3 {width: 100px;
+	  height: 50px;
+	  background-color: red;}
+	  .buttons a{
+	  text-decoration: none;
+	  font-size: 20px;
+	  font-family: arial black;
+	  color: black;}
+	  #button1:hover {
+	  background-color: green;
+	  color: white;}
+	  #button2:hover {
+	  background-color: blue;
+	  color: white;}
+	  #button3:hover {
+	  background-color: yellow;
+	  color: white;}
+	  #date{ position: absolute;
+	  top: -200%;
+	  left: 50%;
+	  }
+	  #time { position: absolute;
+	  top: -200%;
+	  left: 90%;}
+   .title {font-size: 20px;
+	  font-family: algerian; 
+	  border: 5px solid black;
+	  text-align: center;
+	  background-color: green;
+	  position: fixed;
+	  left: 280px;
+	  top: 0px;
+	  margin: 5px;
+	  color: red;
+	  }
+	
+	 
