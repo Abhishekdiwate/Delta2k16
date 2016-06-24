@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-image: url("ZocRa.png");
+}
+   .pause {
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
+		position: absolute;
+		top: 30px;
+		left: 30px;
+		background-color: black;
+    }
+	.resume{
+	  height: 30px;
+        width: 30px;
+        cursor: pointer;
+		position: absolute;
+		top: 30px;
+		left: 90px;
+		
+		}
+</style>
+</head>
+<body onload="startGame()">
+<script>
+    var floor;
+	var player;
+	var obstacle=[];
+	var score;
+	var up=true;
+	var a=[];
+	var clear;
+	var highscore;
+	var pause;
+	var best;
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+       clear  = setInterval(updateGameArea, 20);        
+
+    window.addEventListener('keydown',function(e){
+    myGameArea.key=e.keyCode;
+})
+window.addEventListener('keyup',function(e){
+                        myGameArea.key=false;
+                        })
+},					
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },stop : function(){
+	clearInterval(
+	clear);}
+}
+function startGame()
+    {
+        myGameArea.start();
+		myGameArea.frameNo=0;
+        floor=new component(480,40,"black",0,230);
+		player=new arc(30,205,25,"orange");	
+score= new text(10,50,"red",300,30)	;
+highscore=new text(10,50,"red",300,90);
+}
+    function updateGameArea()
+    {
+        var x,height,minheight,maxheight;
+		var y=3;
+		var i=1;
+        myGameArea.clear();
+  
+        myGameArea.frameNo+=1;
+        if(myGameArea.frameNo==1||gap(150))
+            {x=myGameArea.canvas.width;
+              
+                obstacle.push(new component(30,40,"green",x,190));
+            }
+    for (i = 0; i < obstacle.length; i+= 1) {
+        obstacle[i].speedX = -y ;
+        obstacle[i].newPos();
+        obstacle[i].update();
+		y=y+0.5;
+		
+    }
+	if(myGameArea.key&&myGameArea.key==32)
+            {
+                player.speedY= -3;
+				up=true;
+				document.getElementById("sound").play();
+            }
+			
+			for(i=0;i<obstacle.length;i++)
+			{
+			if(player.trigger(obstacle[i])){
+			myGameArea.stop();
+			document.getElementById("sound1").play();
+			}}
+       score.text="score:"+myGameArea.frameNo;
+        score.update();
+		highscore.text="highscore:"+best;
+		highscore.update();
+		
+		
+        ``
+          floor.update();
+        player.update();
+        player.newpos();
+		floor.newPos();
+        
+    }
+	function text(width, height, color, x, y)
+    {
+        this.x=x;
+        this.y=y;
+        this.width=width;
+        this.height=height;
+        this.update=function(){
+            ctx=myGameArea.context;
+            ctx.font="30px arial";
+            ctx.fillStyle=color;
+            ctx.fillText(this.text,this.x,this.y);
+        }
+		
+	}
+    
+
+	function component(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+	this.newPos=function()
+	
+	
+	
+	
+	
+	
+	{
+	this.x+=this.speedX;
+	this.y+=this.speedY;}
+}
+    function arc(centerx,centery,radius,color)
+    {
+        this.centerX=centerx;
+        this.centerY=centery;
+        this.radius=radius;
+		this.gravityspeed=0;
+		this.gravity=1;
+		;
+		this.bounce=0.2;
+		this.speedX=0;
+		this.speedY=0;
+        this.update=function(){
+            ctx=myGameArea.context;
+            ctx.fillStyle
+                =
+                color;
+				ctx.fill();
+           
+            ctx.beginPath();
+            ctx.arc(this.centerX,this.centerY,this.radius,0,2*Math.PI,true);
+            ctx.stroke();
+            
+            
+        }
+		this.newpos=function(){
+            this.centerX+=this.speedX;
+			if(this.centerX==450-this.radius)
+			{
+			this.centerX=this.radius;}
+		
+						if(this.centerY<=120)
+			{
+			
+			
+			this.centerY+=(this.gravity-this.speedY);
+			up=false;
+			
+			}
+			else {if(up==true){
+			this.centerY+=(this.gravity+this.speedY);}
+			else{
+			this.centerY+=(this.gravity-this.speedY);}
+			}
+			
+			
+			
+			
+			
+			this.hit();
+			
+			
+        }
+		this.hit=function(){
+		var hit=230-this.centerY-this.radius;
+		if(hit<0){
+		this.centerY=230-this.radius;
+		
+		}
+		
+		
+		}
+		
+		
+		
+    
+	this.jump=function(){
+	
+	
+	
+	this.speedY=0.8;}
+	
+	this.trigger=function(object){
+	var oleft=object.x;
+	var otop=object.y;
+	var left=this.centerX+this.radius;
+	var bottom=this.centerY+this.radius;
+	var oright=object.x+object.width;
+	var right=this.centerX-this.radius;
+	var crash=true;
+	if((left<oleft)||(bottom<otop)||(right>oright))
+	{
+	crash=false;}
+	return crash;
+	
+	}
+	}
+		 function gap(n)
+	 
+      { 
+            if((myGameArea.frameNo/n)%1==0){
+                return true;}
+        
+            else{
+                return false;
+            }}
+		function move(){
+		myGameArea.start();
+		}
+		if(myGameArea.stop())
+			{
+			best=myGameArea.frameNo;}
+
+			
+			
+	
+    </script>
+	<img class="pause" src="abhi.png" onclick="myGameArea.stop()">
+	<img class="resume" src="download.png" onclick="move()">
+	<audio id="sound" controls>
+<source src="Jump-SoundBible.com-1007297584.wav"></audio>
+<audio id="sound1" controls>
+<source src="242-game-over.mp3"></audio>
+
+</body>
+</html>
+
+
